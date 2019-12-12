@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h4>Equipment Fraction</h4>
+  <ul>
+    <li>F = number of machines required per shift</li>
+    <li>S = standard time (minutes) per unit produced</li>
+    <li>Q = number of units to be produced per shift</li>
+    <li>E = actual performance, expressed as percentage of standard time</li>
+    <li>H = amount of time (minutes) available per machines</li>
+    <li>R = reliablity of machine, expressed as percent "up time"</li>
+  </ul>
+  <form>
+    <label for="Standard Time">Standard Time</label>
+    <input type="text" name="StandardTime" id="standardTime"><br />
+
+    <label for="PerShift">Per Shift</label>
+    <input type="text" name="PerShift" id="perShift"><br />
+
+    <label for="Percentage of Standard Time">Percentage of standard time</label>
+    <input type="text" name="PercStandardTime" id="perStandardTime"><br />
+
+    <label for="Amount of Time">Amount of time (minutes)</label>
+    <input type="text" name="AmountOfTime" id="amountOfTime"><br />
+
+    <label for="Reliability">Reliability</label>
+    <input type="text" name="Reliability" id="reliablity"><br />
+
+    <button type="submit">Solve</button>
+  </form>
+
+  <p>Total: <span id="total"></span></p>
+  <span id="total2"></span>
+  <script>
+    let standardTime = document.querySelector('#standardTime');
+    let perShift = document.querySelector('#perShift');
+    let perStandardTime = document.querySelector('#perStandardTime');
+    let amountOfTime = document.querySelector('#amountOfTime');
+    let reliablity = document.querySelector('#reliablity');
+    let totalSpan = document.querySelector('#total');
+    let total2 = document.querySelector('#total2');
+
+    const form = document.querySelector('form');
+    const solveBtn = document.querySelector('#solve');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // S x Q
+      let SQ = parseFloat(standardTime.value) * parseFloat(perShift.value);
+
+      // E x H x R
+      let EHR = parseFloat(perStandardTime.value) * parseFloat(amountOfTime.value) * parseFloat(reliablity.value)
+
+      let total = SQ / EHR;
+      totalSpan.innerHTML = total.toFixed(3);
+
+      // reset
+      setTimeout(() => {
+        reset()
+      }, 3000);
+    });
+
+    function reset() {
+      standardTime.value = '';
+      perShift.value = '';
+      perStandardTime.value = '';
+      amountOfTime.value = '';
+      reliablity.value = '';
+      totalSpan.innerHTML = '';
+    }
+
+  </script>
+</body>
+</html>
