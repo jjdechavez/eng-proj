@@ -4,39 +4,177 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Project</title>
+
+  <style>
+    .gravityTable {
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 12px 20px;
+      margin: 8px 0;
+    }
+    td input[type=text] {
+      width: 80%;
+      text-align: center;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 2px solid #000;
+      background-color: transparent;
+    }
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    .tdData {
+      padding: 2em 20px;
+      margin: 8px 0;
+    }
+    .fracBtn, .WXYBtn {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-decoration: none;
+      margin: 2em 2px;
+      cursor: pointer;
+    }
+    .WXYBtn {
+      background-color: #4CAF50;
+      width: 30%;   
+    }
+    .totalContainer {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-around;
+    }
+    #gravity {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <h4>Equipment Fraction</h4>
-  <ul>
-    <li>F = number of machines required per shift</li>
-    <li>S = standard time (minutes) per unit produced</li>
-    <li>Q = number of units to be produced per shift</li>
-    <li>E = actual performance, expressed as percentage of standard time</li>
-    <li>H = amount of time (minutes) available per machines</li>
-    <li>R = reliablity of machine, expressed as percent "up time"</li>
-  </ul>
-  <form>
-    <label for="Standard Time">S</label>
-    <input type="text" name="StandardTime" id="standardTime"><br />
+  <button onclick="toggleComponents()">Equipment Fraction</button>
+  <button onclick="toggleComponents()">Gravity</button>
+  <div id="equipFraction">
+    <h4>Equipment Fraction</h4>
+    <ul>
+      <li>F = number of machines required per shift</li>
+      <li>S = standard time (minutes) per unit produced</li>
+      <li>Q = number of units to be produced per shift</li>
+      <li>E = actual performance, expressed as percentage of standard time</li>
+      <li>H = amount of time (minutes) available per machines</li>
+      <li>R = reliablity of machine, expressed as percent "up time"</li>
+    </ul>
+    <form id="equipFractionForm">
+      <label for="Standard Time">S</label>
+      <input type="text" name="StandardTime" id="standardTime"><br />
+  
+      <label for="PerShift">Q</label>
+      <input type="text" name="PerShift" id="perShift"><br />
+  
+      <label for="Percentage of Standard Time">E</label>
+      <input type="text" name="PercStandardTime" id="perStandardTime"><br />
+  
+      <label for="Amount of Time">H</label>
+      <input type="text" name="AmountOfTime" id="amountOfTime"><br />
+  
+      <label for="Reliability">R</label>
+      <input type="text" name="Reliability" id="reliablity"><br />
+  
+      <button class="fracBtn" type="submit">Solve</button>
+    </form>
+  
+    <p>Total: <span id="total"></span></p>
+    <span id="total2"></span>
+  </div>
 
-    <label for="PerShift">Q</label>
-    <input type="text" name="PerShift" id="perShift"><br />
+  <!-- Gravity -->
 
-    <label for="Percentage of Standard Time">E</label>
-    <input type="text" name="PercStandardTime" id="perStandardTime"><br />
+  <div id="gravity">
+    <h4>Gravity</h4>
+    <ul>
+      <li>X</li>
+      <li>Y</li>
+      <li>W - weight</li>
+    </ul>
 
-    <label for="Amount of Time">H</label>
-    <input type="text" name="AmountOfTime" id="amountOfTime"><br />
+    <form id="gravityForm">
+      <div class="form-container" style="display: flex;">
+        <table class="gravityTable" style="width: 50%;">
+          <thead>
+            <th>Row</th>
+            <th>x<sub>i</sub></th>
+            <th>y<sub>i</sub></th>
+            <th>w<sub>i</sub></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><input type="text" name="x1" id="x1"></td>
+              <td><input type="text" name="y1" id="y1"></td>
+              <td><input type="text" name="w1" id="w1"></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><input type="text" name="x2" id="x2"></td>
+              <td><input type="text" name="y2" id="y2"></td>
+              <td><input type="text" name="w2" id="w2"></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><input type="text" name="x3" id="x3"></td>
+              <td><input type="text" name="y3" id="y3"></td>
+              <td><input type="text" name="w3" id="w3"></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><input type="text" name="x4" id="x4"></td>
+              <td><input type="text" name="y4" id="y4"></td>
+              <td><input type="text" name="w4" id="w4"></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><input type="text" name="x5" id="x5"></td>
+              <td><input type="text" name="y5" id="y5"></td>
+              <td><input type="text" name="w5" id="w5"></td>
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align: center;">Total</td>
+              <td id="wTotal"></td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="gravityTable" style="width: 50%;">
+          <thead>
+            <th>w<sub>i</sub>x<sub>i</sub></th>
+            <th>w<sub>i</sub>y<sub>i</sub></th>
+          </thead>
+          <tbody id="WXYData">
+          </tbody>
+          <tfoot>
+            <tr>
+              <td id="sumWX"></td>
+              <td id="sumWY"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="totalContainer">
+        <button class="WXYBtn" type="submit">Solve</button>
+        <p>
+          y = <span id="resultY"></span>
+        </p>
+        <p>
+          x = <span id="resultX"></span>
+        </p>
+      </div>
+    </form>
+  </div>
 
-    <label for="Reliability">R</label>
-    <input type="text" name="Reliability" id="reliablity"><br />
-
-    <button type="submit">Solve</button>
-  </form>
-
-  <p>Total: <span id="total"></span></p>
-  <span id="total2"></span>
   <script>
     let standardTime = document.querySelector('#standardTime');
     let perShift = document.querySelector('#perShift');
@@ -46,11 +184,31 @@
     let totalSpan = document.querySelector('#total');
     let total2 = document.querySelector('#total2');
 
-    const form = document.querySelector('form');
-    
     // E - perStandard & R - Reliability ay may percent
 
-    form.addEventListener('submit', e => {
+    // Toggle components
+    let equipFraction = document.querySelector('#equipFraction').style;
+    let gravity = document.querySelector('#gravity').style;
+    function toggleComponents() {
+      if (equipFraction.display === "none") {
+        equipFraction.display = "block";
+        gravity.display = "none";
+      } else {
+        gravity.display = "block";
+        equipFraction.display = "none";
+      }
+    }
+    // function toggleComponents() {
+    //   if (equipFraction.display === "none" || gravity.display === "none") {
+    //     equipFraction.display = "block" || gravity.display === "block"
+    //   } else {
+    //     equipFraction.display = "none" || gravity.display === "none"
+    //   }
+    // }
+    
+    const equipFractionForm = document.querySelector('#equipFractionForm');
+
+    equipFractionForm.addEventListener('submit', e => {
       e.preventDefault();
       // S x Q
       let SQ = parseFloat(standardTime.value) * parseFloat(perShift.value);
@@ -72,6 +230,87 @@
         reset()
       }, 3000);
     });
+
+    // Gravity
+    let x1 = document.querySelector('#x1').value;
+    let y1 = document.querySelector('#y1').value;
+    let w1 = document.querySelector('#w1').value;
+
+    let x2 = document.querySelector('#x2').value;
+    let y2 = document.querySelector('#y2').value;
+    let w2 = document.querySelector('#w2').value;
+
+    let x3 = document.querySelector('#x3').value;
+    let y3 = document.querySelector('#y3').value;
+    let w3 = document.querySelector('#w3').value;
+
+    let x4 = document.querySelector('#x4').value;
+    let y4 = document.querySelector('#y4').value;
+    let w4 = document.querySelector('#w4').value;
+    
+    let x5 = document.querySelector('#x5').value;
+    let y5 = document.querySelector('#y5').value;
+    let w5 = document.querySelector('#w5').value;
+
+    let xArr = [];
+    let yArr = [];
+    let wArr = [];
+
+    // w * x
+    let gravityForm = document.querySelector('#gravityForm');
+    gravityForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      // push w data to wArr
+      wArr.push.apply(wArr, [w1, w2, w3, w4, w5]);
+      // push x data to xArr
+      xArr.push.apply(xArr, [x1, x2, x3, x4, x5]);
+      // push y data to yArr
+      yArr.push.apply(yArr, [y1, y2, y3, y4, y5]);
+
+      // Total W
+      let wData = document.querySelector('#wTotal');
+      let numOr0 = n => /^\d+$/.test(n) ? parseInt(n) : 0;
+      let wResult = wArr.reduce((Wtotal, data) => {
+        return Wtotal + numOr0(data)
+      }, 0);
+
+      wData.innerHTML = wArr.reduce((Wtotal, data) => {
+        return Wtotal + numOr0(data)
+      }, 0);
+
+      // Get Total of W & X
+      let WXYData = document.querySelector('#WXYData');
+      WXYData.innerHTML = wArr.map((data, index) => {
+        return (
+          `<tr>
+            <td class="tdData">${data * xArr[index]}</td>
+            <td class="tdData">${data * yArr[index]}</td>
+          </tr>`
+        )
+      }).join(''); // join('') para wala ung comma
+
+      // Get Summation W * X
+      const sumWXCon = document.querySelector('#sumWX');
+      sumWXCon.innerHTML = wArr.reduce((totalWX, current, index) => totalWX + current * xArr[index], 0);
+      let sumWX = wArr.reduce((totalWX, current, index) => totalWX + current * xArr[index], 0);
+
+      // Get Total W * Y
+      const sumWYCon = document.querySelector('#sumWY');
+      sumWYCon.innerHTML = wArr.reduce((totalWY, current, index) => totalWY + current * yArr[index], 0);
+      let sumWY = wArr.reduce((totalWY, current, index) => totalWY + current * yArr[index], 0);
+
+      // Result Gravity X
+      const gravityXCon = document.querySelector('#resultX');
+      let gravityX = sumWX / wResult;
+      gravityXCon.innerHTML = gravityX.toFixed(1)
+
+      // Result Gravity Y
+      const gravityYCon = document.querySelector('#resultY');
+      let gravityY = sumWY / wResult;
+      gravityYCon.innerHTML = gravityY.toFixed(1)
+    })
+
 
     function reset() {
       standardTime.value = '';
