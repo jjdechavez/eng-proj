@@ -17,19 +17,19 @@
     <li>R = reliablity of machine, expressed as percent "up time"</li>
   </ul>
   <form>
-    <label for="Standard Time">Standard Time</label>
+    <label for="Standard Time">S</label>
     <input type="text" name="StandardTime" id="standardTime"><br />
 
-    <label for="PerShift">Per Shift</label>
+    <label for="PerShift">Q</label>
     <input type="text" name="PerShift" id="perShift"><br />
 
-    <label for="Percentage of Standard Time">Percentage of standard time</label>
+    <label for="Percentage of Standard Time">E</label>
     <input type="text" name="PercStandardTime" id="perStandardTime"><br />
 
-    <label for="Amount of Time">Amount of time (minutes)</label>
+    <label for="Amount of Time">H</label>
     <input type="text" name="AmountOfTime" id="amountOfTime"><br />
 
-    <label for="Reliability">Reliability</label>
+    <label for="Reliability">R</label>
     <input type="text" name="Reliability" id="reliablity"><br />
 
     <button type="submit">Solve</button>
@@ -47,15 +47,22 @@
     let total2 = document.querySelector('#total2');
 
     const form = document.querySelector('form');
-    const solveBtn = document.querySelector('#solve');
+    
+    // E - perStandard & R - Reliability ay may percent
 
     form.addEventListener('submit', e => {
       e.preventDefault();
       // S x Q
       let SQ = parseFloat(standardTime.value) * parseFloat(perShift.value);
 
+      let parsePerStandardTime = parseFloat(perStandardTime.value) / 100;
+      let parseReliablity = parseFloat(reliablity.value) / 100;
+
+      let decimalPerStandardTime = parsePerStandardTime.toFixed(2);
+      let decimalReliability = parseReliablity.toFixed(2);
+
       // E x H x R
-      let EHR = parseFloat(perStandardTime.value) * parseFloat(amountOfTime.value) * parseFloat(reliablity.value)
+      let EHR = decimalPerStandardTime * parseFloat(amountOfTime.value) * decimalReliability;
 
       let total = SQ / EHR;
       totalSpan.innerHTML = total.toFixed(3);
