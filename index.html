@@ -171,6 +171,7 @@
         <p>
           x = <span id="resultX"></span>
         </p>
+        <button onclick="test()">test BTn</button>
       </div>
     </form>
   </div>
@@ -198,18 +199,12 @@
         equipFraction.display = "none";
       }
     }
-    // function toggleComponents() {
-    //   if (equipFraction.display === "none" || gravity.display === "none") {
-    //     equipFraction.display = "block" || gravity.display === "block"
-    //   } else {
-    //     equipFraction.display = "none" || gravity.display === "none"
-    //   }
-    // }
     
     const equipFractionForm = document.querySelector('#equipFractionForm');
 
     equipFractionForm.addEventListener('submit', e => {
       e.preventDefault();
+
       // S x Q
       let SQ = parseFloat(standardTime.value) * parseFloat(perShift.value);
 
@@ -227,46 +222,46 @@
 
       // reset
       setTimeout(() => {
-        reset()
+        fractionReset()
       }, 3000);
     });
 
     // Gravity
-    let x1 = document.querySelector('#x1').value;
-    let y1 = document.querySelector('#y1').value;
-    let w1 = document.querySelector('#w1').value;
 
-    let x2 = document.querySelector('#x2').value;
-    let y2 = document.querySelector('#y2').value;
-    let w2 = document.querySelector('#w2').value;
-
-    let x3 = document.querySelector('#x3').value;
-    let y3 = document.querySelector('#y3').value;
-    let w3 = document.querySelector('#w3').value;
-
-    let x4 = document.querySelector('#x4').value;
-    let y4 = document.querySelector('#y4').value;
-    let w4 = document.querySelector('#w4').value;
-    
-    let x5 = document.querySelector('#x5').value;
-    let y5 = document.querySelector('#y5').value;
-    let w5 = document.querySelector('#w5').value;
-
-    let xArr = [];
-    let yArr = [];
-    let wArr = [];
-
-    // w * x
     let gravityForm = document.querySelector('#gravityForm');
     gravityForm.addEventListener('submit', e => {
       e.preventDefault();
 
+      let xArr = [];
+      let yArr = [];
+      let wArr = [];
+
+      let x1 = document.querySelector('#x1').value;
+      let y1 = document.querySelector('#y1').value;
+      let w1 = document.querySelector('#w1').value;
+
+      let x2 = document.querySelector('#x2').value;
+      let y2 = document.querySelector('#y2').value;
+      let w2 = document.querySelector('#w2').value;
+
+      let x3 = document.querySelector('#x3').value;
+      let y3 = document.querySelector('#y3').value;
+      let w3 = document.querySelector('#w3').value;
+
+      let x4 = document.querySelector('#x4').value;
+      let y4 = document.querySelector('#y4').value;
+      let w4 = document.querySelector('#w4').value;
+      
+      let x5 = document.querySelector('#x5').value;
+      let y5 = document.querySelector('#y5').value;
+      let w5 = document.querySelector('#w5').value;
+
       // push w data to wArr
-      wArr.push.apply(wArr, [w1, w2, w3, w4, w5]);
+      wArr.push(w1, w2, w3, w4, w5);
       // push x data to xArr
-      xArr.push.apply(xArr, [x1, x2, x3, x4, x5]);
+      xArr.push(x1, x2, x3, x4, x5);
       // push y data to yArr
-      yArr.push.apply(yArr, [y1, y2, y3, y4, y5]);
+      yArr.push(y1, y2, y3, y4, y5);
 
       // Total W
       let wData = document.querySelector('#wTotal');
@@ -309,10 +304,29 @@
       const gravityYCon = document.querySelector('#resultY');
       let gravityY = sumWY / wResult;
       gravityYCon.innerHTML = gravityY.toFixed(1)
+
+      // Reset gravity fields
+      setTimeout(() => {
+        // arrays
+        xArr = [];
+        yArr = [];
+        wArr = [];
+
+        // Fields
+        gravityForm.reset()
+
+        // innerHTML
+        wData.innerHTML = '';
+        WXYData.innerHTML = '';
+        sumWXCon.innerHTML = '';
+        sumWYCon.innerHTML = '';
+        gravityXCon.innerHTML = '';
+        gravityYCon.innerHTML = '';
+      }, 5000)
     })
 
 
-    function reset() {
+    function fractionReset() {
       standardTime.value = '';
       perShift.value = '';
       perStandardTime.value = '';
